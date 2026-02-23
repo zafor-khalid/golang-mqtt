@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"lab/golang-mqtt-chat-engine/client"
 	"lab/golang-mqtt-chat-engine/config"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -41,42 +43,19 @@ func runPublisher() {
 	pub := client.NewPublisher(*user)
 	defer pub.Disconnect()
 
-	fmt.Println("Publisher started")
-	fmt.Println("Commands:")
-	fmt.Println("/topic <name>")
-	fmt.Println("/ephemeral <msg>")
-	fmt.Println("/typing")
-	fmt.Println("exit")
+	fmt.Println("type exit to exit")
 
 	currentTopic := *topic
 
 	for {
 		fmt.Print("> ")
-		var input string
-		fmt.Scanln(&input)
+		reader := bufio.NewReader(os.Stdin)
+
+		input, _ := reader.ReadString('\n')
+		input = strings.TrimSpace(input)
 
 		if input == "exit" {
 			break
-		}
-
-		if input == "/typing" {
-			pub.Publish(currentTopic, "", "typing", false)
-			continue
-		}
-
-		if input == "/ephemeral" {
-			var msg string
-			fmt.Scanln(&msg)
-			pub.Publish(currentTopic, msg, "ephemeral", false)
-			continue
-		}
-
-		if input == "/topic" {
-			var newTopic string
-			fmt.Scanln(&newTopic)
-			currentTopic = newTopic
-			fmt.Println("Switched topic:", currentTopic)
-			continue
 		}
 
 		pub.Publish(currentTopic, input, "normal", true)
