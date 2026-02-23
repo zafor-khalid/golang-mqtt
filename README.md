@@ -71,6 +71,13 @@ Subscriber receives:
 
 ---
 
+### 4️⃣ VISIT Dashboard
+
+```
+user: admin pass: public
+http://localhost:18083/#/dashboard/overview
+```
+
 # 🛑 Stop Broker
 
 ```
