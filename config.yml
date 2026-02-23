@@ -1,0 +1,9 @@
+broker:
+  url: "tcp://localhost:1883"
+  default_room: "chat/general"
+  qos: 1
+  ephemeral_ttl: 10  # seconds
+
+rooms:
+  - "chat/general"
+  - "chat/random"

@@ -7,4 +7,6 @@ type ChatMessage struct {
 	Topic     string    `json:"topic"`
 	Payload   string    `json:"payload"`
 	Timestamp time.Time `json:"timestamp"`
+	Type      string    `json:"type"`
+	Room      string    `json:"room"`
 }
